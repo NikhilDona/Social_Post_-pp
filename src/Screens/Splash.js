@@ -10,7 +10,7 @@ const Splash = () => {
         setTimeout(() => {
             navigation.navigate("Home")
 
-        },3000)
+        },1000)
 
     },[])
     return(
