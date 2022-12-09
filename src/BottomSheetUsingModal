@@ -1,0 +1,51 @@
+import React, { createContext, useCallback, useEffect, useRef, useState } from "react";
+import { View, Text, Dimensions, TouchableOpacity, FlatList, Image, StatusBar } from "react-native";
+import ActionSheet from "../Components/ActionSheet";
+import Modal from "react-native-modal";
+
+
+function Home({ navigation }) {
+
+    const [visible, setVisible] = useState(false)
+
+    const toggleModal = () => {
+        setVisible(!visible)
+    }
+
+    return (
+
+        <View style={{ flex: 1, backgroundColor: "#fff" }}>
+            <StatusBar
+                backgroundColor={"#fff"}
+                barStyle={'dark-content'}
+            />
+            <TouchableOpacity onPress={() => setVisible(true)} style={{ width: "70%", alignSelf: "center", padding: 20, marginTop: 100, backgroundColor: "coral", borderRadius: 30, justifyContent: "center", alignItems: "center" }}>
+                <Text style={{ color: "#fff", fontSize: 17 }}>Show Modal</Text>
+            </TouchableOpacity>
+            <Modal
+                isVisible={visible}
+                onBackdropPress={() => setVisible(false)}
+                onBackButtonPress={() => setVisible(false)}
+                swipeDirection='down'
+                onSwipeComplete={toggleModal}
+                animationInTiming={300}
+                backdropTransitionInTiming={500}
+                style={{justifyContent:"flex-end",margin:0}}
+            >
+                <View style={{ backgroundColor: "#f2f2f2",minHeight:400,borderTopEndRadius:20,borderTopLeftRadius:20 }}>
+                    <StatusBar
+                     barStyle={'dark-content'}
+                     backgroundColor={"#000"}
+                    />
+                    <View style={{height:5,width:60,backgroundColor:"gray",alignSelf:"center",marginTop:10,borderRadius:10}}/>
+                    
+                </View>
+            </Modal>
+
+
+
+        </View>
+    );
+}
+
+export default Home;
