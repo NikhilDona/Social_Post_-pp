@@ -1,0 +1,49 @@
+import React, { createContext, useCallback, useEffect, useRef, useState } from "react";
+import { View, Text, Dimensions, TouchableOpacity, FlatList, Image, StatusBar,Modal } from "react-native";
+import ActionSheet from "../Components/ActionSheet";
+import Animated from 'react-native-reanimated';
+import BottomSheet from 'reanimated-bottom-sheet';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { LocaleConfig, Calendar, Arrow } from 'react-native-calendars';
+
+
+
+function Home({ navigation }) {
+
+    const[modalVisible,setModalVisible] = useState(false)
+
+    return (
+
+        <View style={{ flex: 1, backgroundColor: "#202427"}}>
+            <StatusBar
+                backgroundColor={"#fff"}
+                barStyle={'dark-content'}
+            />
+
+            <TouchableOpacity onPress={() => setModalVisible(true)} style={{alignSelf:"center",marginTop:100}}>
+                <Text style={{backgroundColor:"black",color:"#fff",padding:20,borderRadius:35,fontSize:18}}>Show Calendar</Text>
+            </TouchableOpacity>
+
+            <Modal
+            visible={modalVisible}
+            style={{backgroundColor: "#202427"}}
+            >
+                <Calendar
+                    style={{ elevation: 3, margin: 30, borderRadius: 10,backgroundColor: "#FFDE4C" }}
+                    onDayPress={(date) => {
+                        console.log(date)
+                        setModalVisible(false)
+                    }}
+                    initialDate={'1990-09-10'}
+                    hideExtraDays={true}
+                    theme={{
+                        calendarBackground: '#202427',
+                        selectedDayBackgroundColor: '#00adf5',
+                    }}
+                />
+            </Modal>
+        </View>
+    );
+}
+
+export default Home;
