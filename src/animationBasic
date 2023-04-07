@@ -1,0 +1,63 @@
+import React, { useEffect, useRef, useState } from "react";
+import { View, Text, StyleSheet, Animated, PanResponder, SafeAreaView, Easing } from 'react-native';
+
+function App() {
+
+  const translation = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    Animated.timing(translation, {
+      toValue: 100,
+      duration:10000,
+      useNativeDriver: false
+    }).start()
+  }, [])
+
+  return (
+    <Animated.View style={styles.container}>
+      <Animated.View
+        style={[styles.box,
+        {
+          backgroundColor:translation.interpolate({
+            inputRange:[0,50,100],
+           outputRange:["white","gray","black"]
+          }),
+          opacity:translation.interpolate({
+            inputRange:[0,50,100],
+            outputRange:[0,0.5,1]
+          }),
+          transform: [
+            { translateX: translation },
+            {
+              rotate:translation.interpolate({
+                inputRange:[0,100],
+                outputRange:['0deg','180deg']
+              })
+            }
+          ],
+        }]}
+      >
+      </Animated.View>
+    </Animated.View>
+  )
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  titleText: {
+    fontSize: 14,
+    lineHeight: 24,
+    fontWeight: 'bold',
+  },
+  box: {
+    height: 150,
+    width: 150,
+    backgroundColor: 'blue',
+    borderRadius: 75
+  },
+});
+
+export default App;
