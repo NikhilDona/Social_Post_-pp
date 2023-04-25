@@ -1,0 +1,116 @@
+import { View, Text, Animated, StyleSheet, SafeAreaView, StatusBar, Alert, TouchableOpacity } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
+import AntDesign from 'react-native-vector-icons/AntDesign'
+
+const Home = () => {
+
+    const animatedValue = useRef(new Animated.Value(0)).current;
+    const [index, setIndex] = useState(0)
+
+    const animate = (toValue) => {
+        Animated.timing(animatedValue, {
+            toValue,
+            duration: 3000,
+            useNativeDriver: false
+        }).start()
+    }
+
+    const onPress = () => {
+        setIndex(index === 1 ? 0 : 1);
+        animate(index === 1 ? 0 : 1)
+    }
+
+    const bgcolor = animatedValue.interpolate({
+        inputRange: [0, 0.001, 0.5, 0.501, 1],
+        outputRange: ['#FFD700', '#FFD700', '#FFD700', 'grey', 'grey']
+    })
+
+    const circleBgColor = animatedValue.interpolate({
+        inputRange: [0, 0.001, 0.5, 0.501, 1],
+        outputRange: ['grey', 'grey', '#FFD700', '#FFD700', '#FFD700']
+    })
+
+    return (
+        <Animated.View style={[styles.container, { backgroundColor: bgcolor }]}>
+            <StatusBar hidden />
+            <Animated.View style={[styles.btn, {
+                transform: [
+                    {
+                        perspective: 300
+
+                    },
+                    {
+                        rotateY: animatedValue.interpolate({
+                            inputRange: [0, 0.5, 1],
+                            outputRange: ['0deg', '180deg', '360deg']
+                        })
+                    },
+                    {
+                        scale: animatedValue.interpolate({
+                            inputRange: [0, 0.5, 1],
+                            outputRange: [1, 20, 1]
+                        })
+                    },
+                    {
+                        translateX: animatedValue.interpolate({
+                            inputRange: [0, 0.5, 1],
+                            outputRange: [0, 10, 0]
+                        })
+                    }
+                ]
+            ,backgroundColor:circleBgColor}]}>
+                <TouchableOpacity onPress={onPress}>
+                    <Animated.View style={[styles.btn, { bottom: -35,backgroundColor:circleBgColor }]}>
+                        <AntDesign name='arrowright' size={24} color={"#FFF"} />
+                    </Animated.View>
+                </TouchableOpacity>
+            </Animated.View>
+        </Animated.View>
+    )
+}
+
+export default Home;
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#FFD700"
+    },
+    container1: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        paddingTop: StatusBar.currentHeight,
+        padding: 8,
+        paddingBottom: 50,
+        backgroundColor: "red",
+        position: 'absolute'
+    },
+    btn: {
+        backgroundColor: "grey",
+        height: 70,
+        width: 70,
+        borderRadius: 35,
+        position: "absolute",
+        bottom: 50,
+        alignSelf: "center",
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    innerView: {
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    contain: {
+        backgroundColor: "grey",
+        height: 70,
+        width: 70,
+        borderRadius: 35,
+        marginTop: "100%",
+        // position: "absolute",
+        // bottom: 50,
+        alignSelf: "center",
+        alignItems: "center",
+        justifyContent: "center"
+    }
+})
