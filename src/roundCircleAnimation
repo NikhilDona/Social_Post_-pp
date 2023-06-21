@@ -1,0 +1,133 @@
+import {
+  SafeAreaView,
+  StyleSheet,
+  StatusBar,
+  Animated,
+  Easing
+} from 'react-native'
+import React, { useEffect, useRef } from 'react'
+
+const MeasureScreen = () => {
+
+  let rotationValue = useRef(new Animated.Value(0)).current
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.timing(rotationValue, {
+        toValue: 45,
+        duration: 2000,
+        easing: Easing.ease,
+        useNativeDriver: true
+      })
+    ).start()
+  }, [])
+  return (
+    <SafeAreaView style={styles.mainView}>
+      <StatusBar backgroundColor={"#202021"} barStyle={"light-content"} />
+      <Animated.View style={[styles.mainAnimatedView, {
+        transform: [{
+          rotate: rotationValue.interpolate({
+            inputRange: [0, 45],
+            outputRange: ['0deg', '-360deg']
+          })
+        }],
+        borderRadius: rotationValue.interpolate({
+          inputRange: [0, 25, 45],
+          outputRange: [100, 100, 70]
+        })
+      }]}>
+        <Animated.View style={[styles.secondAnimatedView, {
+          transform: [{
+            rotate: rotationValue.interpolate({
+              inputRange: [0, 45],
+              outputRange: ['0deg', '360deg']
+            })
+          }],
+          borderRadius: rotationValue.interpolate({
+            inputRange: [0, 25, 45],
+            outputRange: [100, 100, 70]
+          })
+        }]}>
+          <Animated.View style={[styles.thirdAnimatedView, {
+            transform: [{
+              rotate: rotationValue.interpolate({
+                inputRange: [0, 45],
+                outputRange: ['0deg', '-360deg']
+              })
+            }],
+            borderRadius: rotationValue.interpolate({
+              inputRange: [0, 25, 45],
+              outputRange: [100, 100, 70]
+            })
+          }]}>
+            <Animated.View style={[styles.fourthAnimatedView, {
+              transform: [{
+                rotate: rotationValue.interpolate({
+                  inputRange: [0, 45],
+                  outputRange: ['0deg', '360deg']
+                })
+              }],
+              borderRadius: rotationValue.interpolate({
+                inputRange: [0, 25, 45],
+                outputRange: [100, 100, 70]
+              })
+            }]}>
+
+            </Animated.View>
+
+          </Animated.View>
+
+        </Animated.View>
+
+      </Animated.View>
+
+    </SafeAreaView>
+  )
+}
+
+const styles = StyleSheet.create({
+  mainView: {
+    backgroundColor: "#202021",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  mainAnimatedView: {
+    height: 300,
+    width: 300,
+    backgroundColor: "#FFF",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 1,
+    position: "absolute"
+  },
+  secondAnimatedView: {
+    height: 280,
+    width: 280,
+    backgroundColor: "#3c3c",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 1,
+    position: "absolute"
+  },
+  thirdAnimatedView: {
+    height: 260,
+    width: 260,
+    backgroundColor: "red",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 1,
+    position: "absolute"
+  },
+  fourthAnimatedView: {
+    height: 220,
+    width: 220,
+    backgroundColor: "blue",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 1,
+    position: "absolute"
+  }
+
+})
+export default MeasureScreen;
